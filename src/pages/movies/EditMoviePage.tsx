@@ -37,7 +37,7 @@ function EditMoviePage() {
 
   const handleUpdateMovie = (e: any) => {
     e.preventDefault();
-    MovieService.setOne(id!, movie);
+    MovieService.setOne<Movie>(id!, movie);
     navigate("/movies");
   };
 

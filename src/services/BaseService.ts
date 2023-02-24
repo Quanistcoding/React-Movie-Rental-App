@@ -8,6 +8,8 @@ import {
   query,
   setDoc,
   deleteDoc,
+  WithFieldValue,
+  DocumentData,
 } from "firebase/firestore";
 
 abstract class BaseService {
@@ -36,8 +38,11 @@ abstract class BaseService {
     const docRef = addDoc(collection(this.db, this.collection), input);
   }
 
-  static setOne(id: string, input: any) {
-    setDoc(doc(this.db, this.collection, id), input);
+  static setOne<T>(id: string, input: T) {
+    setDoc(
+      doc(this.db, this.collection, id),
+      input as WithFieldValue<DocumentData>
+    );
   }
 
   static deleteOne(id: string) {

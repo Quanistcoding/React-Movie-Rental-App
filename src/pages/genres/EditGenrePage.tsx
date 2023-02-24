@@ -24,7 +24,7 @@ function EditGenrePage() {
 
   const handleUpdateGenre = (e: any) => {
     e.preventDefault();
-    GenreService.setOne(id!, genre);
+    GenreService.setOne<Genre>(id!, genre);
     navigate("/genres");
   };
 

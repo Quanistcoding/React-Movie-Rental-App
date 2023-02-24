@@ -53,7 +53,7 @@ class AuthService {
   }
 
   static setUserOnLogin(uid: string, data: any) {
-    UserService.setOne(uid, data);
+    UserService.setOne<User>(uid, data);
   }
 }
 
