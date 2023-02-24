@@ -8,9 +8,7 @@ function LoginPage() {
     <button
       className="btn btn-primary"
       onClick={() => {
-        AuthService.login((user) => {
-          userContext.updateUserState(user);
-        });
+        AuthService.login();
       }}
     >
       Login with Google

@@ -96,7 +96,6 @@ function Navbar() {
                 className="nav-link btn btn-link"
                 onClick={() => {
                   AuthService.logout();
-                  userContext.updateUserState({ displayName: "" });
                 }}
               >
                 Logout

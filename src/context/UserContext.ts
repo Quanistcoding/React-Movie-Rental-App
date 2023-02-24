@@ -5,5 +5,4 @@ export const UserContext = React.createContext({
     displayName: "",
     userRole: "",
   },
-  updateUserState(user: any) {},
 });

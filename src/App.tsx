@@ -7,14 +7,14 @@ import { UserContext } from "context/UserContext";
 
 function App() {
   const [user, setUser] = useState<any>();
-
-  const updateUserState = (user: any) => {
-    console.log(user);
-    setUser(user);
-  };
+  useEffect(() => {
+    AuthService.getUser((user) => {
+      setUser(user);
+    });
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, updateUserState }}>
+    <UserContext.Provider value={{ user }}>
       <Navbar />
       <Outlet />
     </UserContext.Provider>
