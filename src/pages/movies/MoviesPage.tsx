@@ -2,6 +2,7 @@ import MovieService from "services/MovieService";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Movie } from "models/movie";
+import ConfirmModal from "components/ConfirmModal";
 
 function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -10,6 +11,10 @@ function MoviesPage() {
       setMovies(data);
     });
   }, []);
+
+  const handleConfirm = (confirmed: boolean, id: string): void => {
+    if (confirmed) MovieService.deleteOne(id);
+  };
 
   return (
     <div>
@@ -32,7 +37,15 @@ function MoviesPage() {
                 <Link className="btn btn-link" to={"/movies/edit/" + movie.id}>
                   Edit
                 </Link>{" "}
-                |<button className="btn btn-link">Delete</button>
+                |
+                <ConfirmModal
+                  text="Delete"
+                  message={
+                    "Are you sure you want to delete" + movie.title + "?"
+                  }
+                  onConfirm={handleConfirm}
+                  id={movie.id}
+                />
               </td>
             </tr>
           ))}

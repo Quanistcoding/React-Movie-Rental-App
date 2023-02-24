@@ -22,7 +22,6 @@ abstract class BaseService {
         dataArray.push({ ...doc.data(), id: doc.id });
       });
       fn(dataArray);
-      console.log(dataArray);
     });
   }
 
