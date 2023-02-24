@@ -14,14 +14,15 @@ abstract class BaseService {
   static db = getFirestore(app);
   static collection = "";
 
-  static async findAll() {
+  static async findAll(fn: (dataArray: any[]) => void) {
     const q = query(collection(this.db, this.collection));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const users: any[] = [];
+      const dataArray: any[] = [];
       querySnapshot.forEach((doc) => {
-        users.push(doc.data());
+        dataArray.push(doc.data());
       });
-      console.log(users);
+      fn(dataArray);
+      console.log(dataArray);
     });
   }
 
