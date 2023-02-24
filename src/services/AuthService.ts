@@ -2,16 +2,16 @@ import app from "./config";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const provider = new GoogleAuthProvider();
-const auth = getAuth();
+const auth = getAuth(app);
 
 class AuthService {
-  static login() {
+  static login(fn: (user: any) => void) {
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential!.accessToken;
         const user = result.user;
-        console.log(user);
+        fn(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -23,6 +23,10 @@ class AuthService {
 
   static logout() {
     auth.signOut();
+  }
+
+  static getUser() {
+    return auth.currentUser;
   }
 }
 

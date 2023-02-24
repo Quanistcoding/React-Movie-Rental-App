@@ -13,7 +13,6 @@ function MoviesPage() {
 
   useEffect(() => {
     MovieService.findAll((data: any) => {
-      console.log(data);
       setMovies(data);
     });
   }, []);

@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import AuthService from "services/AuthService";
+import { useContext } from "react";
+import { UserContext } from "context/UserContext";
 
 function Navbar() {
+  const userContext = useContext(UserContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -76,6 +79,14 @@ function Navbar() {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
+              <span className="nav-link">
+                <span>Hello </span>
+                <strong>
+                  {userContext.user ? userContext.user.displayName : ""}
+                </strong>
+              </span>
+            </li>
+            <li className="nav-item">
               <Link to="login" className="nav-link">
                 Login
               </Link>
@@ -85,6 +96,7 @@ function Navbar() {
                 className="nav-link btn btn-link"
                 onClick={() => {
                   AuthService.logout();
+                  userContext.updateUserState({ displayName: "" });
                 }}
               >
                 Logout
