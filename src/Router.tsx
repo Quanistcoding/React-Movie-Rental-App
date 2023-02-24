@@ -4,6 +4,8 @@ import MoviesPage from "pages/movies/MoviesPage";
 import CreateMoviePage from "pages/movies/CreateMoviePage";
 import Home from "pages/home/Home";
 import App from "./App";
+import EditMoviePage from "pages/movies/EditMoviePage";
+import PageNotFound from "pages/errors/PageNotFound";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "movies/create",
         element: <CreateMoviePage />,
+      },
+      {
+        path: "movies/edit/:id",
+        element: <EditMoviePage />,
+      },
+      {
+        path: "/pageNotFound",
+        element: <PageNotFound />,
       },
     ],
   },

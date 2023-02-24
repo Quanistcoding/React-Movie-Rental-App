@@ -19,16 +19,17 @@ abstract class BaseService {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const dataArray: any[] = [];
       querySnapshot.forEach((doc) => {
-        dataArray.push(doc.data());
+        dataArray.push({ ...doc.data(), id: doc.id });
       });
       fn(dataArray);
       console.log(dataArray);
     });
   }
 
-  static async findOne(id: string) {
+  static async findOne(id: string, fn: (data: any) => void) {
     const unsub = onSnapshot(doc(this.db, this.collection, id), (doc) => {
-      console.log("Current data: ", doc.data());
+      if (!doc.data()) fn(null);
+      fn({ ...doc.data(), id: doc.id });
     });
   }
 

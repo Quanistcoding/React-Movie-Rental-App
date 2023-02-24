@@ -1,13 +1,11 @@
 import { useState } from "react";
 import MovieService from "services/MovieService";
-
-class Movie {
-  title: string = "";
-  releaseYear: string = "";
-}
+import { Movie } from "models/movie";
+import { useNavigate } from "react-router-dom";
 
 function CreateMoviePage() {
   const [formData, setFormData] = useState(new Movie());
+  const naviatae = useNavigate();
 
   const handleInputChange = (e: any): void => {
     setFormData((formData) => ({
@@ -19,6 +17,7 @@ function CreateMoviePage() {
   const handleCreateMovie = (e: any) => {
     e.preventDefault();
     MovieService.addOne(formData);
+    naviatae("/movies");
   };
 
   return (
