@@ -1,7 +1,7 @@
 import MovieService from "services/MovieService";
 import { useState, useEffect } from "react";
-import { Movie } from "models/movie";
 import { useParams, useNavigate } from "react-router-dom";
+import { Movie } from "models/movie";
 
 function EditMoviePage() {
   const { id } = useParams();
@@ -30,7 +30,7 @@ function EditMoviePage() {
 
   return (
     <div>
-      <h2>Create New Movie</h2>
+      <h2>Edit Movie</h2>
       <form>
         <div className="mb-3">
           <label htmlFor="movieTitle" className="form-label">

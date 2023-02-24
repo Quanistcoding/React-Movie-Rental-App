@@ -26,9 +26,9 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
+              <Link to="genres" className="nav-link active" aria-current="page">
+                Genres
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a

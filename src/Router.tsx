@@ -6,6 +6,9 @@ import Home from "pages/home/Home";
 import App from "./App";
 import EditMoviePage from "pages/movies/EditMoviePage";
 import PageNotFound from "pages/errors/PageNotFound";
+import GenrePage from "pages/genres/GenresPaag";
+import CreateGenrePage from "pages/genres/CreateGenrePage";
+import EditGenrePage from "pages/genres/EditGenrePage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,18 @@ const router = createBrowserRouter([
       {
         path: "movies/edit/:id",
         element: <EditMoviePage />,
+      },
+      {
+        path: "genres",
+        element: <GenrePage />,
+      },
+      {
+        path: "genres/create",
+        element: <CreateGenrePage />,
+      },
+      {
+        path: "genres/edit/:id",
+        element: <EditGenrePage />,
       },
       {
         path: "/pageNotFound",
