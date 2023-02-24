@@ -13,6 +13,7 @@ function MoviesPage() {
 
   useEffect(() => {
     MovieService.findAll((data: any) => {
+      console.log(data);
       setMovies(data);
     });
   }, []);
@@ -38,6 +39,7 @@ function MoviesPage() {
           <tr>
             <th scope="col">Title</th>
             <th scope="col">Release Year</th>
+            <th scope="col">Genre</th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +47,7 @@ function MoviesPage() {
             <tr key={movie.id}>
               <td>{movie.title}</td>
               <td>{movie.releaseYear}</td>
+              <td>{movie.genre ? movie.genre.name : ""}</td>
               <td>
                 <Link className="btn btn-link" to={"/movies/edit/" + movie.id}>
                   Edit

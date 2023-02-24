@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AuthService from "services/AuthService";
 
 function Navbar() {
   return (
@@ -73,17 +74,23 @@ function Navbar() {
               </a>
             </li>
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link to="login" className="nav-link">
+                Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <button
+                className="nav-link btn btn-link"
+                onClick={() => {
+                  AuthService.logout();
+                }}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

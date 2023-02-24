@@ -2,24 +2,37 @@ import MovieService from "services/MovieService";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Movie } from "models/movie";
-
+import GenreService from "services/GenreService";
+import { Genre } from "models/genre";
 function EditMoviePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(new Movie());
+  const [genres, setGenres] = useState<Genre[]>([]);
 
   useEffect(() => {
     MovieService.findOne(id!, (data) => {
       if (!data) return navigate("/pageNotFound");
       setMovie(data);
     });
+    GenreService.findAll((data) => {
+      setGenres(data);
+    });
   }, []);
 
   const handleInputChange = (e: any): void => {
-    setMovie((formData) => ({
-      ...formData,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.name == "genre") {
+      const genre = genres.find((genre) => genre.id == e.target.value);
+      setMovie((formData) => ({
+        ...formData,
+        genre: genre!,
+      }));
+    } else {
+      setMovie((formData) => ({
+        ...formData,
+        [e.target.name]: e.target.value,
+      }));
+    }
   };
 
   const handleUpdateMovie = (e: any) => {
@@ -57,6 +70,24 @@ function EditMoviePage() {
             aria-describedby="releaseYear"
             onChange={handleInputChange}
           />
+
+          <label htmlFor="genre" className="form-label">
+            Genre
+          </label>
+          <select
+            className="form-select"
+            aria-label="Select genre"
+            id="genre"
+            onChange={handleInputChange}
+            name="genre"
+          >
+            <option value="">Choose Genre</option>
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <button

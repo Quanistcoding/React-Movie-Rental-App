@@ -4,19 +4,19 @@ import { Genre } from "models/genre";
 import { useNavigate } from "react-router-dom";
 
 function CreateGenrePage() {
-  const [formData, setFormData] = useState(new Genre());
+  const [genre, setGenre] = useState(new Genre());
   const navigate = useNavigate();
 
   const handleInputChange = (e: any): void => {
-    setFormData((formData) => ({
-      ...formData,
+    setGenre((genre) => ({
+      ...genre,
       [e.target.name]: e.target.value,
     }));
   };
 
   const handleCreateGenre = (e: any) => {
     e.preventDefault();
-    GenreService.addOne(formData);
+    GenreService.addOne(genre);
     navigate("/genres");
   };
 
