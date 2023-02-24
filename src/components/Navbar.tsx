@@ -78,29 +78,34 @@ function Navbar() {
             </li>
           </ul>
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <span className="nav-link">
-                <span>Hello </span>
-                <strong>
-                  {userContext.user ? userContext.user.displayName : ""}
-                </strong>
-              </span>
-            </li>
-            <li className="nav-item">
-              <Link to="login" className="nav-link">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <button
-                className="nav-link btn btn-link"
-                onClick={() => {
-                  AuthService.logout();
-                }}
-              >
-                Logout
-              </button>
-            </li>
+            {userContext ? (
+              <>
+                <li className="nav-item">
+                  <span className="nav-link">
+                    <span>Hello </span>
+                    <strong>
+                      {userContext ? userContext.displayName : ""}
+                    </strong>
+                  </span>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="nav-link btn btn-link"
+                    onClick={() => {
+                      AuthService.logout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <Link to="login" className="nav-link">
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
