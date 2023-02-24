@@ -5,7 +5,6 @@ import { UserContext } from "context/UserContext";
 
 function Navbar() {
   const userContext = useContext(UserContext);
-  console.log(userContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">

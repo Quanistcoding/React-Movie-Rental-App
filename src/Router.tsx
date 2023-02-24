@@ -10,6 +10,7 @@ import GenrePage from "pages/genres/GenresPaag";
 import CreateGenrePage from "pages/genres/CreateGenrePage";
 import EditGenrePage from "pages/genres/EditGenrePage";
 import LoginPage from "pages/auth/LoginPage";
+import AuthGuard from "components/AuthGuard";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: "genres",
-        element: <GenrePage />,
+        element: <AuthGuard component={<GenrePage />} returnUrl="genres" />,
       },
       {
         path: "genres/create",

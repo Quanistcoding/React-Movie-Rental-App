@@ -12,7 +12,7 @@ const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
 class AuthService {
-  static login() {
+  static login(callback: () => void) {
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -27,8 +27,8 @@ class AuthService {
           address: "",
           email: user.email,
         };
-        console.log(userData);
         this.setUserOnLogin(user.uid, userData);
+        callback();
       })
       .catch((error) => {
         const errorCode = error.code;
