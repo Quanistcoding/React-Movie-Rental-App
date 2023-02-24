@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function CreateMoviePage() {
   const [formData, setFormData] = useState(new Movie());
-  const naviatae = useNavigate();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: any): void => {
     setFormData((formData) => ({
@@ -17,7 +17,7 @@ function CreateMoviePage() {
   const handleCreateMovie = (e: any) => {
     e.preventDefault();
     MovieService.addOne(formData);
-    naviatae("/movies");
+    navigate("/movies");
   };
 
   return (
