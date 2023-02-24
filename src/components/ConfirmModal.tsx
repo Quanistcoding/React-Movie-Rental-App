@@ -1,28 +1,23 @@
+import { ReactElement } from "react";
+
 function ConfirmModal({
   text,
   message,
   onConfirm,
   id,
+  modalId,
 }: {
   text: string;
-  message: string;
+  message: string | ReactElement;
   onConfirm: (confirmed: boolean, id: string) => void;
   id: string;
+  modalId: string;
 }) {
   return (
     <div className="d-inline-block">
-      <button
-        type="button"
-        className="btn btn-link text-danger"
-        data-bs-toggle="modal"
-        data-bs-target="#modal"
-      >
-        {text}
-      </button>
-
       <div
         className="modal fade"
-        id="modal"
+        id={modalId}
         tabIndex={-1}
         role="dialog"
         aria-labelledby="modal"
@@ -37,7 +32,7 @@ function ConfirmModal({
               <button
                 type="button"
                 className="close"
-                data-bs-dismiss="modal"
+                data-bs-dismiss={modalId}
                 aria-label="Close"
               >
                 <span aria-hidden="true">&times;</span>
@@ -48,7 +43,7 @@ function ConfirmModal({
               <button
                 type="button"
                 className="btn btn-secondary"
-                data-bs-dismiss="modal"
+                data-bs-dismiss={modalId}
               >
                 Cancel
               </button>
@@ -58,7 +53,7 @@ function ConfirmModal({
                 onClick={() => {
                   onConfirm(true, id);
                 }}
-                data-bs-dismiss="modal"
+                data-bs-dismiss={modalId}
               >
                 Confirm
               </button>

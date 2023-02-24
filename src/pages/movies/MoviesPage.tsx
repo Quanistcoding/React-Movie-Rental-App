@@ -6,14 +6,26 @@ import ConfirmModal from "components/ConfirmModal";
 
 function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [modalProps, setModalProps] = useState({
+    id: "",
+    title: "",
+  });
+
   useEffect(() => {
     MovieService.findAll((data: any) => {
       setMovies(data);
     });
   }, []);
 
-  const handleConfirm = (confirmed: boolean, id: string): void => {
+  const handleConfirmDelete = (confirmed: boolean, id: string): void => {
     if (confirmed) MovieService.deleteOne(id);
+  };
+
+  const handleOpenModal = (id: string, title: string) => {
+    setModalProps({
+      id,
+      title,
+    });
   };
 
   return (
@@ -38,19 +50,31 @@ function MoviesPage() {
                   Edit
                 </Link>{" "}
                 |
-                <ConfirmModal
-                  text="Delete"
-                  message={
-                    "Are you sure you want to delete" + movie.title + "?"
-                  }
-                  onConfirm={handleConfirm}
-                  id={movie.id}
-                />
+                <button
+                  type="button"
+                  className="btn btn-link text-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal"
+                  onClick={() => handleOpenModal(movie.id, movie.title)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <ConfirmModal
+        modalId="modal"
+        text="Delete"
+        message={
+          <p>
+            Are you sure you want to delete <strong>{modalProps.title}</strong>?
+          </p>
+        }
+        onConfirm={handleConfirmDelete}
+        id={modalProps.id}
+      />
     </div>
   );
 }
