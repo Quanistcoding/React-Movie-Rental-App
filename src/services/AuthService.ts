@@ -42,7 +42,7 @@ class AuthService {
     auth.signOut();
   }
 
-  static getUser(fn: (user: firebase.User | null | undefined) => void) {
+  static getUser(fn: (user: any) => void) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         UserService.findOne(user.uid, (user) => {
