@@ -49,7 +49,7 @@ function Navbar() {
                     className="nav-link btn btn-link"
                   >
                     <span>Hello </span>
-                    <strong>{userContext.user.name}</strong>
+                    <strong>{userContext.user.displayName}</strong>
                   </Link>
                 </li>
                 <li className="nav-item">

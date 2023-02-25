@@ -28,7 +28,7 @@ abstract class BaseService {
     });
   }
 
-  static findOne(id: string, fn: (data: any) => void) {
+  static async findOne(id: string, fn: (data: any) => void) {
     const unsub = onSnapshot(doc(this.db, this.collection, id), (doc) => {
       if (!doc.data()) fn(null);
       fn({ ...doc.data(), id: doc.id });
@@ -46,19 +46,20 @@ abstract class BaseService {
     }
   }
 
-  static addOne(input: any) {
-    const docRef = addDoc(collection(this.db, this.collection), input);
+  static async addOne(input: any) {
+    const docRef = await addDoc(collection(this.db, this.collection), input);
   }
 
-  static setOne<T>(id: string, input: T) {
-    setDoc(
+  static async setOne<T>(id: string, input: T) {
+    await setDoc(
       doc(this.db, this.collection, id),
       input as WithFieldValue<DocumentData>
     );
   }
 
-  static deleteOne(id: string) {
-    deleteDoc(doc(this.db, this.collection, id));
+  static async deleteOne(id: string, fn?: () => void) {
+    await deleteDoc(doc(this.db, this.collection, id));
+    if (fn) fn();
   }
 }
 

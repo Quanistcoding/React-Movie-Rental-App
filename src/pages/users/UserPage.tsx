@@ -24,11 +24,12 @@ function UsersPage() {
 
   const handleConfirmDelete = (confirmed: boolean, id: string): void => {
     if (confirmed) {
-      console.log(id);
-      UserService.deleteOne(id);
-    }
-    if (id === userContext.user.id) {
-      AuthService.logout();
+      UserService.deleteOne(id, () => {
+        if (id === userContext.user.uid) {
+          console.log("logging out");
+          AuthService.logout();
+        }
+      });
     }
   };
 

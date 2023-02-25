@@ -12,6 +12,8 @@ const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
 class AuthService {
+  static registeredCallers: string[] = [];
+
   static login(callback: () => void) {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -38,16 +40,24 @@ class AuthService {
     auth.signOut();
   }
 
-  static getUser(fn: (user: any) => void) {
+  static getUser(callerName: string, fn: (user: any) => void) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        UserService.findOneOnce(user.uid, (user) => {
-          fn(user);
-        });
+        fn(user);
+
+        // UserService.findOneOnce(user.uid, (user) => {
+        //   fn(user);
+        // });
       } else {
         fn(null);
       }
     });
+
+    if (!this.registeredCallers.includes(callerName)) {
+      this.registeredCallers.push(callerName);
+    } else {
+      unsubscribe();
+    }
   }
 
   static getCurrentUser() {
