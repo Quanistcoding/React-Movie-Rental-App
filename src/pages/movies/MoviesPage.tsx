@@ -10,6 +10,7 @@ import GenreService from "services/GenreService";
 function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [selectGenre, setSelectGenre] = useState("All");
   const [modalProps, setModalProps] = useState({
     id: "",
     title: "",
@@ -36,12 +37,14 @@ function MoviesPage() {
     });
   };
 
+  const handleSelectGenre = () => {};
+
   return (
     <div>
       <h2>Moives</h2>
       <div className="row">
         <div className="col-2">
-          <GenreListGroup genres={genres} />
+          <GenreListGroup genres={genres} onSelect={handleSelectGenre} />
         </div>
         <div className="col">
           {" "}

@@ -28,10 +28,18 @@ function EditUserPage() {
     }));
   };
 
+  const handleAdminChange = () => {
+    setUser((user) => ({
+      ...user,
+      isAdmin: !user.isAdmin,
+    }));
+  };
+
   const handleUpdateUser = (e: any) => {
     e.preventDefault();
     UserService.setOne<User>(id!, user);
     navigate("/users");
+    console.log(user);
   };
 
   return (
@@ -51,18 +59,22 @@ function EditUserPage() {
             aria-describedby="userName"
             onChange={handleInputChange}
           />
-          <label htmlFor="isAdmin" className="form-label">
-            Is Admin
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="isAdmin"
-            name="isAdmin"
-            value={user.isAdmin ? "ture" : "false"}
-            aria-describedby="isAdmin"
-            onChange={handleInputChange}
-          />
+
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="isAdmin"
+              onChange={handleAdminChange}
+              name="isAdmin"
+              checked={user.isAdmin}
+            />
+            <label className="form-check-label" htmlFor="isAdmin">
+              Is Admin
+            </label>
+          </div>
+
           <label htmlFor="phone" className="form-label">
             Phone
           </label>
