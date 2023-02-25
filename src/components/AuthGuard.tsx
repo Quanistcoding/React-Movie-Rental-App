@@ -12,7 +12,6 @@ function AuthGuard(props: { component: JSX.Element; returnUrl: string }) {
   useEffect(() => {
     AuthService.getUser("authGuard", (user) => {
       setUser(user);
-      console.log(user);
       if (user) {
         setComponent(props.component);
       }

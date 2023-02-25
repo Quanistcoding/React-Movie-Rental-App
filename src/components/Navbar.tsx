@@ -45,7 +45,7 @@ function Navbar() {
               <>
                 <li className="nav-item">
                   <Link
-                    to={"users/edit/" + userContext.user.id}
+                    to={"users/edit/" + userContext.user.uid}
                     className="nav-link btn btn-link"
                   >
                     <span>Hello </span>
