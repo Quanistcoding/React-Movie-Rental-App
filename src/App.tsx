@@ -9,6 +9,10 @@ import firebase from "firebase/auth";
 function App() {
   const [user, setUser] = useState<firebase.User | null | undefined>();
 
+  const resetUser = () => {
+    setUser(null);
+  };
+
   useEffect(() => {
     AuthService.getUser((user) => {
       setUser(user);
@@ -16,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{ user, resetUser }}>
       <Navbar />
       <Outlet />
     </UserContext.Provider>

@@ -16,8 +16,8 @@ function EditGenrePage() {
   }, []);
 
   const handleInputChange = (e: any): void => {
-    setGenre((formData) => ({
-      ...formData,
+    setGenre((genre) => ({
+      ...genre,
       [e.target.name]: e.target.value,
     }));
   };

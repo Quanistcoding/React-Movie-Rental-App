@@ -11,6 +11,8 @@ import CreateGenrePage from "pages/genres/CreateGenrePage";
 import EditGenrePage from "pages/genres/EditGenrePage";
 import LoginPage from "pages/auth/LoginPage";
 import AuthGuard from "components/AuthGuard";
+import UsersPage from "pages/users/UserPage";
+import EditUserPage from "pages/users/EditUserPage";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
       {
         path: "genres/edit/:id",
         element: <EditGenrePage />,
+      },
+      {
+        path: "users",
+        element: <AuthGuard component={<UsersPage />} returnUrl="users" />,
+      },
+      {
+        path: "users/edit/:id",
+        element: <EditUserPage />,
       },
       {
         path: "/pageNotFound",

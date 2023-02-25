@@ -9,9 +9,9 @@ function AuthGuard(props: { component: JSX.Element; returnUrl: string }) {
   useEffect(() => {
     AuthService.getUser((user) => {
       setUser(user);
-      if (user && user!.name) setComponent(props.component);
+      if (user) setComponent(props.component);
     });
-  }, []);
+  }, [props]);
 
   return (
     <>

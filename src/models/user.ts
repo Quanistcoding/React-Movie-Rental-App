@@ -3,7 +3,7 @@ interface User {
   name: string | null;
   isAdmin: boolean;
   phone: string | null;
-  address: string;
+  address: string | null;
   email: string | null;
 }
 export type { User };

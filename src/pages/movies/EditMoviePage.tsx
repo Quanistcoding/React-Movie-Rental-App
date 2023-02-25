@@ -23,13 +23,13 @@ function EditMoviePage() {
   const handleInputChange = (e: any): void => {
     if (e.target.name == "genre") {
       const genre = genres.find((genre) => genre.id == e.target.value);
-      setMovie((formData) => ({
-        ...formData,
+      setMovie((movie) => ({
+        ...movie,
         genre: genre!,
       }));
     } else {
-      setMovie((formData) => ({
-        ...formData,
+      setMovie((movie) => ({
+        ...movie,
         [e.target.name]: e.target.value,
       }));
     }

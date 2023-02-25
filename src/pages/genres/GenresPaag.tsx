@@ -30,6 +30,7 @@ function GenrePage() {
 
   return (
     <div>
+      <h2>Genres</h2>
       <Link to="/genres/create" className="btn btn-primary">
         Create
       </Link>

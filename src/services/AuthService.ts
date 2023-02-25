@@ -19,14 +19,10 @@ class AuthService {
         const token = credential!.accessToken;
         const user = result.user;
 
-        const userData: User = {
+        const userData: any = {
           id: user.uid,
-          name: user.displayName,
-          isAdmin: false,
-          phone: user.phoneNumber,
-          address: "",
-          email: user.email,
         };
+
         this.setUserOnLogin(user.uid, userData);
         callback();
       })
@@ -55,7 +51,9 @@ class AuthService {
   }
 
   static setUserOnLogin(uid: string, data: any) {
-    UserService.setOne<User>(uid, data);
+    UserService.findOne(uid, (user) => {
+      if (!user) UserService.setOne<User>(uid, data);
+    });
   }
 }
 
