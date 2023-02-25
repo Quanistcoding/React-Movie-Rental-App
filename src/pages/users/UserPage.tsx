@@ -23,10 +23,11 @@ function UsersPage() {
   }, []);
 
   const handleConfirmDelete = (confirmed: boolean, id: string): void => {
-    console.log(confirmed);
-    if (confirmed) UserService.deleteOne(id);
+    if (confirmed) {
+      console.log(id);
+      UserService.deleteOne(id);
+    }
     if (id === userContext.user.id) {
-      userContext.resetUser();
       AuthService.logout();
     }
   };

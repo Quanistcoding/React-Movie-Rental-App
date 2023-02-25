@@ -10,6 +10,7 @@ import {
   deleteDoc,
   WithFieldValue,
   DocumentData,
+  getDoc,
 } from "firebase/firestore";
 
 abstract class BaseService {
@@ -27,11 +28,22 @@ abstract class BaseService {
     });
   }
 
-  static async findOne(id: string, fn: (data: any) => void) {
+  static findOne(id: string, fn: (data: any) => void) {
     const unsub = onSnapshot(doc(this.db, this.collection, id), (doc) => {
       if (!doc.data()) fn(null);
       fn({ ...doc.data(), id: doc.id });
     });
+  }
+
+  static async findOneOnce(id: string, fn: (data: any) => void) {
+    const docRef = doc(this.db, this.collection, id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      fn({ ...docSnap.data(), id: docSnap.id });
+    } else {
+      fn(null);
+    }
   }
 
   static addOne(input: any) {

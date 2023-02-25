@@ -15,9 +15,11 @@ function EditUserPage() {
   });
 
   useEffect(() => {
-    UserService.findOne(id!, (data) => {
+    UserService.findOneOnce(id!, (data) => {
       if (!data) return navigate("/");
-      setUser(data);
+      for (let key in data) {
+        setUser((user) => ({ ...user, [key]: data[key] }));
+      }
     });
   }, []);
 
@@ -39,7 +41,6 @@ function EditUserPage() {
     e.preventDefault();
     UserService.setOne<User>(id!, user);
     navigate("/users");
-    console.log(user);
   };
 
   return (

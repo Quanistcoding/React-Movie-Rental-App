@@ -8,6 +8,7 @@ function AuthGuard(props: { component: JSX.Element; returnUrl: string }) {
 
   useEffect(() => {
     AuthService.getUser((user) => {
+      console.log(user);
       setUser(user);
       if (user) setComponent(props.component);
     });

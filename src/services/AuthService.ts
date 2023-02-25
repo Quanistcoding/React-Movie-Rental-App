@@ -39,9 +39,9 @@ class AuthService {
   }
 
   static getUser(fn: (user: any) => void) {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        UserService.findOne(user.uid, (user) => {
+        UserService.findOneOnce(user.uid, (user) => {
           fn(user);
         });
       } else {
@@ -50,8 +50,12 @@ class AuthService {
     });
   }
 
+  static getCurrentUser() {
+    return auth.currentUser;
+  }
+
   static setUserOnLogin(uid: string, data: any) {
-    UserService.findOne(uid, (user) => {
+    UserService.findOneOnce(uid, (user) => {
       if (!user) UserService.setOne<User>(uid, data);
     });
   }

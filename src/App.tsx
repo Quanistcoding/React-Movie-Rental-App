@@ -14,7 +14,9 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("app effect reached");
     AuthService.getUser((user) => {
+      console.log(user);
       setUser(user);
     });
   }, []);
