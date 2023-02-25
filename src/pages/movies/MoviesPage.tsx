@@ -9,8 +9,9 @@ import GenreService from "services/GenreService";
 
 function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [selectGenre, setSelectGenre] = useState("All");
+  const [selectedGenre, setSelectedGenre] = useState("all");
   const [modalProps, setModalProps] = useState({
     id: "",
     title: "",
@@ -19,6 +20,7 @@ function MoviesPage() {
   useEffect(() => {
     MovieService.findAll((data: any) => {
       setMovies(data);
+      if (filteredMovies.length === 0) setFilteredMovies(data);
     });
 
     GenreService.findAll((data: any) => {
@@ -37,21 +39,31 @@ function MoviesPage() {
     });
   };
 
-  const handleSelectGenre = () => {};
+  const handleSelectGenre = (e: any) => {
+    const genre = e.target.getAttribute("data-value");
+    setSelectedGenre(genre);
+    if (genre === "all") return setFilteredMovies(movies);
+    const filteredMovies = movies.filter((movie) => movie.genre.name === genre);
+    setFilteredMovies(filteredMovies);
+  };
 
   return (
     <div>
       <h2>Moives</h2>
       <div className="row">
         <div className="col-2">
-          <GenreListGroup genres={genres} onSelect={handleSelectGenre} />
+          <GenreListGroup
+            genres={genres}
+            onSelect={handleSelectGenre}
+            selectedGenre={selectedGenre}
+          />
         </div>
         <div className="col">
           {" "}
           <Link to="/movies/create" className="btn btn-primary">
             Create
           </Link>
-          <table className="table">
+          <table className="table align-middle">
             <thead>
               <tr>
                 <th scope="col">Title</th>
@@ -60,7 +72,7 @@ function MoviesPage() {
               </tr>
             </thead>
             <tbody>
-              {movies.map((movie) => (
+              {filteredMovies.map((movie) => (
                 <tr key={movie.id}>
                   <td>{movie.title}</td>
                   <td>{movie.releaseYear}</td>

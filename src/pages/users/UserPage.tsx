@@ -42,7 +42,7 @@ function UsersPage() {
   return (
     <div>
       <h2>Users</h2>
-      <table className="table">
+      <table className="table align-middle">
         <thead>
           <tr>
             <th scope="col">Id</th>

@@ -34,7 +34,7 @@ function GenrePage() {
       <Link to="/genres/create" className="btn btn-primary">
         Create
       </Link>
-      <table className="table">
+      <table className="table align-middle">
         <thead>
           <tr>
             <th scope="col">Name</th>
