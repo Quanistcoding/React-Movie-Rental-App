@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import MovieService from "services/MovieService";
 import GenreService from "services/GenreService";
-import { Movie } from "models/movie";
+import { Movie, MovieSchema } from "models/movie";
 import { Genre } from "models/genre";
 import { useNavigate } from "react-router-dom";
+import { ValidationError } from "joi";
 
 function CreateMoviePage() {
   const [movie, setMovie] = useState<Movie>(new Movie());
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [validationError, setValidationError] = useState<
+    ValidationError | undefined
+  >(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,13 +37,24 @@ function CreateMoviePage() {
 
   const handleCreateMovie = (e: any) => {
     e.preventDefault();
-    MovieService.addOne(movie);
-    navigate("/movies");
+    console.log(movie);
+    const { error } = MovieSchema.validate(movie);
+    setValidationError(error);
+    if (!error) {
+      MovieService.addOne(movie);
+      navigate("/movies");
+    }
   };
 
   return (
     <div>
       <h2>Create New Movie</h2>
+      {validationError ? (
+        <div className="alert alert-danger">{validationError?.message}</div>
+      ) : (
+        ""
+      )}
+
       <form>
         <div className="mb-3">
           <label htmlFor="movieTitle" className="form-label">
@@ -63,6 +78,7 @@ function CreateMoviePage() {
             name="releaseYear"
             aria-describedby="releaseYear"
             onChange={handleInputChange}
+            value={1900}
           />
           <label htmlFor="genre" className="form-label">
             Genre
