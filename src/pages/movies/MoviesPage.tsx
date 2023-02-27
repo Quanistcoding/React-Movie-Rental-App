@@ -6,6 +6,9 @@ import ConfirmModal from "components/ConfirmModal";
 import GenreListGroup from "components/GenreListGroup";
 import { Genre } from "models/genre";
 import GenreService from "services/GenreService";
+import LikedButton from "components/LikedButton";
+import { useContext } from "react";
+import { UserContext } from "context/UserContext";
 
 function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -16,9 +19,18 @@ function MoviesPage() {
     id: "",
     title: "",
   });
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
-    MovieService.findAll((data: any) => {
+    const id = userContext.user ? userContext.user.uid : "";
+
+    MovieService.findAll((data: Movie[]) => {
+      if (data.length !== 0) {
+        data = data.map((item) => ({
+          ...item,
+          liked: item.likedBy!.includes(id),
+        }));
+      }
       setMovies(data);
       if (filteredMovies.length === 0) setFilteredMovies(data);
     });
@@ -26,7 +38,7 @@ function MoviesPage() {
     GenreService.findAll((data: any) => {
       setGenres(data);
     });
-  }, []);
+  }, [userContext]);
 
   const handleConfirmDelete = (confirmed: boolean, id: string): void => {
     if (confirmed) MovieService.deleteOne(id);
@@ -69,6 +81,7 @@ function MoviesPage() {
                 <th scope="col">Title</th>
                 <th scope="col">Release Year</th>
                 <th scope="col">Genre</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -77,6 +90,18 @@ function MoviesPage() {
                   <td>{movie.title}</td>
                   <td>{movie.releaseYear}</td>
                   <td>{movie.genre ? movie.genre.name : ""}</td>
+                  <td>
+                    {userContext.user ? (
+                      <LikedButton
+                        liked={movie.liked}
+                        uid={userContext.user ? userContext.user.uid : ""}
+                        movieId={movie.id}
+                        likedBy={movie.likedBy}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </td>
                   <td>
                     <Link
                       className="btn btn-link"

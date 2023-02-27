@@ -15,7 +15,6 @@ function App() {
 
   useEffect(() => {
     AuthService.getUser("app", (user) => {
-      console.log(user);
       setUser(user);
     });
   }, []);

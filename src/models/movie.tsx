@@ -4,6 +4,8 @@ class Movie {
   title = "";
   releaseYear = "";
   genre = new Genre();
+  liked = false;
+  likedBy = [] as string[];
 }
 
 export { Movie };

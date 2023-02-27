@@ -11,6 +11,7 @@ import {
   WithFieldValue,
   DocumentData,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 abstract class BaseService {
@@ -55,6 +56,11 @@ abstract class BaseService {
       doc(this.db, this.collection, id),
       input as WithFieldValue<DocumentData>
     );
+  }
+
+  static async updateOne<T>(id: string, input: T) {
+    const docRef = doc(this.db, this.collection, id);
+    await updateDoc(docRef, input as WithFieldValue<DocumentData>);
   }
 
   static async deleteOne(id: string, fn?: () => void) {
