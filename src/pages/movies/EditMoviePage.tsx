@@ -80,6 +80,7 @@ function EditMoviePage() {
             id="genre"
             onChange={handleInputChange}
             name="genre"
+            value={movie.genre.id}
           >
             <option value="">Choose Genre</option>
             {genres.map((genre) => (

@@ -78,7 +78,6 @@ function CreateMoviePage() {
             name="releaseYear"
             aria-describedby="releaseYear"
             onChange={handleInputChange}
-            value={1900}
           />
           <label htmlFor="genre" className="form-label">
             Genre

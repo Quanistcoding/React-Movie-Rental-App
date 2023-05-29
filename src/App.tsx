@@ -22,7 +22,9 @@ function App() {
   return (
     <UserContext.Provider value={{ user, resetUser }}>
       <Navbar />
-      <Outlet />
+      <div className="container">
+        <Outlet />
+      </div>
     </UserContext.Provider>
   );
 }

@@ -20,7 +20,7 @@ abstract class BaseService {
 
   static async findAll(fn: (dataArray: any[]) => void) {
     const q = query(collection(this.db, this.collection));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    onSnapshot(q, (querySnapshot) => {
       const dataArray: any[] = [];
       querySnapshot.forEach((doc) => {
         dataArray.push({ ...doc.data(), id: doc.id });
@@ -30,7 +30,7 @@ abstract class BaseService {
   }
 
   static async findOne(id: string, fn: (data: any) => void) {
-    const unsub = onSnapshot(doc(this.db, this.collection, id), (doc) => {
+    onSnapshot(doc(this.db, this.collection, id), (doc) => {
       if (!doc.data()) fn(null);
       fn({ ...doc.data(), id: doc.id });
     });
@@ -48,7 +48,7 @@ abstract class BaseService {
   }
 
   static async addOne(input: any) {
-    const docRef = await addDoc(collection(this.db, this.collection), input);
+    await addDoc(collection(this.db, this.collection), input);
   }
 
   static async setOne<T>(id: string, input: T) {
