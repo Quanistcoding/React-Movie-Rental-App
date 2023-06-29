@@ -19,10 +19,11 @@ function MoviesPage() {
     id: "",
     title: "",
   });
-  const userContext = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    const id = userContext.user ? userContext.user.uid : "";
+    console.log(user);
+    const id = user ? user.uid : "";
 
     MovieService.findAll((data: Movie[]) => {
       if (data.length !== 0) {
@@ -38,7 +39,7 @@ function MoviesPage() {
     GenreService.findAll((data: any) => {
       setGenres(data);
     });
-  }, [userContext]);
+  }, [user]);
 
   const handleConfirmDelete = (confirmed: boolean, id: string): void => {
     if (confirmed) MovieService.deleteOne(id);
@@ -72,9 +73,11 @@ function MoviesPage() {
         </div>
         <div className="col">
           {" "}
-          <Link to="/movies/create" className="btn btn-primary">
-            Create
-          </Link>
+          {user && (
+            <Link to="/movies/create" className="btn btn-primary">
+              Create
+            </Link>
+          )}
           <table className="table align-middle">
             <thead>
               <tr>
@@ -91,10 +94,10 @@ function MoviesPage() {
                   <td>{movie.releaseYear}</td>
                   <td>{movie.genre ? movie.genre.name : ""}</td>
                   <td>
-                    {userContext.user ? (
+                    {user ? (
                       <LikedButton
                         liked={movie.liked}
-                        uid={userContext.user ? userContext.user.uid : ""}
+                        uid={user ? user.uid : ""}
                         movieId={movie.id}
                         likedBy={movie.likedBy}
                       />
@@ -103,22 +106,27 @@ function MoviesPage() {
                     )}
                   </td>
                   <td>
-                    <Link
-                      className="btn btn-link"
-                      to={"/movies/edit/" + movie.id}
-                    >
-                      Edit
-                    </Link>{" "}
-                    |
-                    <button
-                      type="button"
-                      className="btn btn-link text-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal"
-                      onClick={() => handleOpenModal(movie.id, movie.title)}
-                    >
-                      Delete
-                    </button>
+                    {user && (
+                      <>
+                        {" "}
+                        <Link
+                          className="btn btn-link"
+                          to={"/movies/edit/" + movie.id}
+                        >
+                          Edit
+                        </Link>{" "}
+                        |
+                        <button
+                          type="button"
+                          className="btn btn-link text-danger"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modal"
+                          onClick={() => handleOpenModal(movie.id, movie.title)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
